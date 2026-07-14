@@ -84,7 +84,7 @@
                         <!-- Subtitle / Breadcrumbs -->
                         <div class="flex items-center gap-1.5 text-[11px] md:text-xs text-gray-500 mt-0.5 font-medium">
                             <span class="text-brand"><span id="total-count"></span> link tersedia</span>
-							<span class="hover:text-brand cursor-pointer transition-colors">(update 10-07-2026)</span>                            
+							<span class="hover:text-brand cursor-pointer transition-colors">(update 20260714)</span>                            
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         <i data-lucide="search" class="h-4 w-4 text-gray-400"></i>
                     </div>
                     <input type="text" id="searchInput" 
-                        class="block w-full pl-9 pr-3 py-2 border border-gray-200 rounded-full leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand text-sm transition-all shadow-sm" 
+                        class="block w-full pl-9 pr-3 py-2 border border-gray-200 rounded-full leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand text-sm transition-all shadow-sm" 
                         placeholder="Cari aplikasi atau deskripsi...">
                 </div>
 
@@ -126,8 +126,8 @@
         // Data Aplikasi
         const linksData = [
             // Emis
-            { category: "Emis", title: "EMIS 4.0", url: "https://emis.kemenag.go.id/", desc: "Gerbang Data Pendidikan Kementerian Agama" },
-			{ category: "Emis", title: "EMIS GTK", url: "https://emisgtk.kemenag.go.id/", desc: "Rumah Digital Guru dan Tenaga Pendidikan Madrasah" },
+            { category: "Emis", title: "Emis 4.0", url: "https://emis.kemenag.go.id/", desc: "Gerbang Data Pendidikan Kementerian Agama" },
+			{ category: "Emis", title: "Emis GTK", url: "https://emisgtk.kemenag.go.id/", desc: "Rumah Digital Guru dan Tenaga Pendidikan Madrasah" },
 			{ category: "Emis", title: "Peta Situs", url: "https://peta-situs.pages.dev/", desc: "Daftar semua menu pada Emis GTK" },
             { category: "Emis", title: "Simpatika", url: "https://old-emisgtk.kemenag.go.id/", desc: "Pusat Layanan GTK Madrasah" },            
             { category: "Emis", title: "Simpatika (Admin)", url: "https://paspor.siap-online.com/cas/login?&service=https://simpadamu.siap.web.id/", desc: "Login Simpatika Akun Admin" },
@@ -169,6 +169,7 @@
             { category: "BOS & Bantuan", title: "Cetak Kartu PIP", url: "https://madrasah.kemenag.go.id/pip", desc: "Program Indonesia Pintar" },
             { category: "BOS & Bantuan", title: "PIP Diknas", url: "https://pip.kemendikdasmen.go.id/home_v1", desc: "Program Indonesia Pintar" },
             { category: "BOS & Bantuan", title: "KIP Kuliah", url: "https://kip-kuliah.kemdiktisaintek.go.id/", desc: "Kartu Indonesia Pintar Kuliah" },
+			{ category: "BOS & Bantuan", title: "Cek Bansos (Desil)", url: "https://cekbansos.kemensos.go.id/", desc: "Pencarian Data Penerima Manfaat Bansos" },
             
             // Pengembangan Diri
             { category: "Pengembangan Diri", title: "PPG Kemenag", url: "https://ppg.kemenag.go.id/", desc: "PPG Dalam Jabatan Transformasi" },
@@ -193,10 +194,11 @@
             { category: "Akreditasi", title: "SiNaDita (Jatim)", url: "https://sinadita.banpdmjatim.id/login", desc: "Aplikasi Manajemen Akreditasi" },
             
             // Hiburan
-            { category: "Hiburan", title: "DUKTEK TV (BitTV)", url: "https://wc26-pd1.blogspot.com", desc: "Live Streaming Sports" },
-			{ category: "Hiburan", title: "KLTRA TV", url: "https://kltraid.pages.dev/", desc: "Free Streaming Sports" },
+            { category: "Hiburan", title: "Duktek TV (BitTV)", url: "https://wc26-pd1.blogspot.com", desc: "Live Streaming Sports" },
+			{ category: "Hiburan", title: "Kltra TV", url: "https://kltraid.pages.dev/", desc: "Free Streaming Sports" },
             { category: "Hiburan", title: "Zentara TV", url: "https://nexoratv.qzz.io/", desc: "Live TV Indonesia" },
             { category: "Hiburan", title: "Streaming TV", url: "https://tv.tioprm.eu.org/", desc: "Streaming TV Gratis" },
+			{ category: "Hiburan", title: "Streaming Radio", url: "https://www.radioindonesia.org/", desc: "Streaming Radio FM" },
             { category: "Hiburan", title: "Murrotal Mp3", url: "https://murrotal30juz.netlify.app/", desc: "Murottal Al-Qur'an 30 Juz Audio Lengkap" }
         ];
 
@@ -337,9 +339,15 @@
                 }, {});
 
                 for (const [category, items] of Object.entries(groupedData)) {
+                    // Mendapatkan total item di kategori ini secara dinamis (berdasarkan pencarian)
+                    const subCount = items.length;
+                    
                     const sectionHTML = `
                         <div class="mb-6">
-                            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 px-1">${category}</h2>
+                            <div class="flex items-center gap-2 mb-3 px-1">
+                                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">${category}</h2>
+                                <span class="px-1.5 py-0.5 text-[10px] font-bold bg-brand text-white rounded-full leading-none flex items-center justify-center min-w-[18px] h-[18px]">${subCount}</span>
+                            </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-3">
                                 ${items.map(item => createCardHTML(item)).join('')}
                             </div>
@@ -348,9 +356,17 @@
                     contentContainer.innerHTML += sectionHTML;
                 }
             } else {
+                // Di mode kategori spesifik, kita juga tambahkan sub-header dengan badge counter kategori aktif
+                const subCount = filteredData.length;
                 const listHTML = `
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-3 mt-2">
-                        ${filteredData.map(item => createCardHTML(item)).join('')}
+                    <div class="mb-6">
+                        <div class="flex items-center gap-2 mb-3 px-1">
+                            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">${activeTab}</h2>
+                            <span class="px-1.5 py-0.5 text-[10px] font-bold bg-brand text-white rounded-full leading-none flex items-center justify-center min-w-[18px] h-[18px]">${subCount}</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-3 mt-2">
+                            ${filteredData.map(item => createCardHTML(item)).join('')}
+                        </div>
                     </div>
                 `;
                 contentContainer.innerHTML = listHTML;
