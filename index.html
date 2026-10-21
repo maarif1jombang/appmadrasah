@@ -66,10 +66,10 @@
 <body class="text-gray-800 antialiased min-h-screen flex flex-col">
 
     <!-- Wrapper Sticky Utama (Header & Pencarian) -->
-    <div class="max-w-5xl mx-auto sticky top-0 z-40 bg-[#FAFBFC] w-full">
+    <div class="max-w-6xl mx-auto sticky top-0 z-40 bg-[#FAFBFC] w-full">
         
         <!-- Header Mengambang (Floating Card) -->
-        <div class="max-w-5xl mx-auto px-3 md:px-8 pt-4 w-full">
+        <div class="max-w-6xl mx-auto px-3 md:px-8 pt-4 w-full">
             <header class="bg-white border border-gray-200 rounded-xl px-3 md:px-4 py-3 md:py-3.5 flex items-center shadow-sm min-h-[64px] md:min-h-[72px]">
                 <div class="flex items-center gap-3 w-full">
                     
@@ -93,7 +93,7 @@
 
         <!-- Area Pencarian & Tab Kategori -->
         <div id="sticky-header" class="w-full transition-all duration-200 border-b border-transparent bg-[#FAFBFC]">
-            <div class="max-w-5xl mx-auto px-3 md:px-8 pt-3 pb-2 w-full">
+            <div class="max-w-6xl mx-auto px-3 md:px-8 pt-3 pb-2 w-full">
                 <!-- Pencarian -->
                 <div class="relative mb-3">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -105,8 +105,11 @@
                 </div>
 
                 <!-- Tab Kategori -->
-                <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-1" id="tabsContainer">
-                    <!-- Rendered by JS -->
+                <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1" id="tabsOuterContainer">
+                    <div id="semuaContainer" class="sticky left-0 z-20 bg-[#FAFBFC] pr-2 border-r flex-shrink-0"></div>
+                    <div class="flex gap-2 flex-shrink-0" id="scrollableTabsContainer">
+                        <!-- Rendered by JS -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,7 +117,7 @@
 
     <!-- Konten Utama (List Aplikasi) -->
     <main class="flex-grow w-full">
-        <div class="max-w-5xl mx-auto px-3 md:px-8 pt-2 pb-10 w-full" id="contentContainer">
+        <div class="max-w-6xl mx-auto px-3 md:px-8 pt-2 pb-10 w-full" id="contentContainer">
             <!-- Rendered by JS -->
         </div>
     </main>
@@ -221,7 +224,8 @@
         let searchQuery = "";
 
         // DOM Elements
-        const tabsContainer = document.getElementById('tabsContainer');
+        const semuaContainer = document.getElementById('semuaContainer');
+        const scrollableTabsContainer = document.getElementById('scrollableTabsContainer');
         const contentContainer = document.getElementById('contentContainer');
         const searchInput = document.getElementById('searchInput');
 
@@ -240,7 +244,9 @@
 
         // Render Tabs
         function renderTabs() {
-            tabsContainer.innerHTML = '';
+            semuaContainer.innerHTML = '';
+            scrollableTabsContainer.innerHTML = '';
+
             categories.forEach(cat => {
                 const btn = document.createElement('button');
                 const count = getCategoryCount(cat);
@@ -267,7 +273,12 @@
                     renderTabs();
                     renderContent();
                 };
-                tabsContainer.appendChild(btn);
+
+                if (cat === "Semua") {
+                    semuaContainer.appendChild(btn);
+                } else {
+                    scrollableTabsContainer.appendChild(btn);
+                }
             });
         }
 
@@ -452,5 +463,8 @@
             lucide.createIcons();
         });
     </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920" integrity="sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==" data-cf-beacon='{"version":"2024.11.0","token":"70760a7e421d4e849fa6754c30393f2e","r":1,"spa":2}' crossorigin="anonymous"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"70760a7e421d4e849fa6754c30393f2e","r":1,"spa":2}' crossorigin="anonymous"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"70760a7e421d4e849fa6754c30393f2e","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
